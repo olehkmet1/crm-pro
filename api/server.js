@@ -28,10 +28,10 @@ mongoose.connect(dbConfig.url, {
 
 
 app.get('/', (req, res) => {
-    res.json({"message": "Welcome to EasyNotes application. Take notes quickly. Organize and keep track of all your notes."});
+    res.send("CRM Pro API");
 });
 
-require('./app/routes/lesson.routes.js')(app);
+require('./app/routes/employees.routes.js')(app);
 
 
 app.listen(3000, () => {
