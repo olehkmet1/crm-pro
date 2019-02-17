@@ -6,7 +6,10 @@ const EmployeeSchema = mongoose.Schema({
     active: { type: Boolean },
     department: { type: String },
     position: { type: String },
-    skills: { type: String }
+    skills: [{ skill: {
+            type: String
+        } }],
+    updated: { type: Date, default: Date.now },
 }, {
     timestamps: true
 });
