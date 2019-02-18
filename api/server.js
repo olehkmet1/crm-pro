@@ -1,21 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const morgan = require('morgan');
+const jwt    = require('jsonwebtoken');
+const jwtConfig = require('./config/jwt.config');
 
 const app = express();
 
-
 app.use(bodyParser.urlencoded({ extended: true }))
-
-
 app.use(bodyParser.json())
 
 
-const dbConfig = require('./config/database.config.js');
+const dbConfig = require('./config/database.config');
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
-
 
 mongoose.connect(dbConfig.url, {
 	useNewUrlParser: true
