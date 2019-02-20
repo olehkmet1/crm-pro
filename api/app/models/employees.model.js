@@ -1,15 +1,12 @@
 const mongoose = require('mongoose');
 
 const EmployeeSchema = mongoose.Schema({
-    name: { type: String },
-    avatar: { type: String },
-    active: { type: Boolean },
-    department: { type: String },
-    position: { type: String },
-    skills: [{ skill: {
-            type: String
-        } }],
-    updated: { type: Date, default: Date.now },
+    name: { type: String, required: true },
+    avatar: { type: String, required: true },
+    active: { type: Boolean, required: true },
+    department: { type: String, required: true },
+    position: { type: String, required: true },
+    skills: { type: Array, required: true }
 }, {
     timestamps: true
 });

@@ -2,12 +2,11 @@ const Employee = require('../models/employees.model.js');
 
 exports.create = (req, res) => {
 
-    if(!req.body.content) {
-        return res.status(400).send({
-            message: "Employee content can not be empty"
-        });
-    }
-
+    // if(!Object.keys(req.body).length) {
+    //     return res.status(400).send({
+    //         message: "Employee content can not be empty"
+    //     });
+    // }
 
     const employee = new Employee({
         name: req.body.name,
@@ -30,9 +29,12 @@ exports.create = (req, res) => {
 };
 
 
-exports.findAll = (req, res) => {
-    Employee.find()
+exports.find = (req, res) => {
+    Employee.find({
+        name: {$regex: req.query.name},
+    })
     .then(employees => {
+        console.log(req.query,22)
         res.send(employees);
     }).catch(err => {
         res.status(500).send({
@@ -41,6 +43,17 @@ exports.findAll = (req, res) => {
     });
 };
 
+exports.findAll = (req, res) => {
+    Employee.find()
+    .then(employees => {
+        console.log(req.query,22)
+        res.send(employees);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving lessons."
+        });
+    });
+};
 
 exports.findOne = (req, res) => {
     Employee.findById(req.params.employeeId)

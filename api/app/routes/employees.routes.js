@@ -4,7 +4,7 @@ module.exports = (app) => {
 
     app.post('/employees', employees.create);
 
-    app.get('/employees', employees.findAll);
+    app.get('/employees', employees.find);
 
     app.get('/employees/:employeeId', employees.findOne);
 
