@@ -29,24 +29,20 @@ exports.create = (req, res) => {
 };
 
 
+
 exports.find = (req, res) => {
+
+let myFilter = [];
+
+for (let key in req.query) {
+    myFilter.push({[key]: { $regex: new RegExp("^" + req.query[key].toLowerCase(), "i") }})
+  }
+
     Employee.find({
-        name: {$regex: req.query.name},
+        $and: myFilter
     })
     .then(employees => {
-        console.log(req.query,22)
-        res.send(employees);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while retrieving lessons."
-        });
-    });
-};
-
-exports.findAll = (req, res) => {
-    Employee.find()
-    .then(employees => {
-        console.log(req.query,22)
+        console.log(myFilter,22)
         res.send(employees);
     }).catch(err => {
         res.status(500).send({
