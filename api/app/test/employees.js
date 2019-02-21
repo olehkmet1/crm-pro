@@ -34,7 +34,7 @@ describe('Employees', () => {
   describe('/POST employee', () => {
     it('it should not POST a employee without enough data', (done) => {
       let employee = {
-          name: "The Lord of the Rings",
+          name: "The Lord of the Ringsss",
           avatar: "https://1.fwcdn.pl/p/36/74/53674/374351.1.jpg",
           active: true,
           department: 'Front-End',
