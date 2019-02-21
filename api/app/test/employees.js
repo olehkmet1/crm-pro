@@ -59,4 +59,67 @@ describe('Employees', () => {
 
 });
 
+describe('/GET/:id employee', () => {
+  it('it should GET an employee by the given id', (done) => {
+    let employee = new Employee({ 
+          name: "The Lord of the Ringsss",
+          avatar: "https://1.fwcdn.pl/p/36/74/53674/374351.1.jpg",
+          active: true,
+          department: 'Front-End',
+          position: 'Junior',
+          skills: ["Angular", "React"]
+    });
+    employee.save((err, book) => {
+        chai.request(server)
+        .get('/employees/' + employee.id)
+        .send(employee)
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            res.body.should.have.property('skills');
+            res.body.should.have.property('name');
+            res.body.should.have.property('avatar');
+            res.body.should.have.property('active');
+            res.body.should.have.property('department');
+            res.body.should.have.property('position');
+            res.body.should.have.property('_id').eql(employee.id);
+          done();
+        });
+    });
+
+  });
+});
+
+describe('/PUT/:id employee', () => {
+  it('it should UPDATE an employee given the id', (done) => {
+    let employee = new Employee({
+          name: "The Lord of the Rings",
+          avatar: "https://1.fwcdn.pl/p/36/74/53674/374351.1.jpg",
+          active: true,
+          department: 'Front-End',
+          position: 'Junior',
+          skills: ["Angular", "React"]
+    })
+    employee.save((err, employee) => {
+            chai.request(server)
+            .put('/employees/' + employee.id)
+            .send({
+              name: "The Lord of the Rings",
+              avatar: "https://1.fwcdn.pl/p/36/74/53674/374351.1.jpg",
+              active: true,
+              department: 'Front-End',
+              position: 'Middle',
+              skills: ["Angular", "React"]
+            })
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('object');
+                res.body.should.have.property('message').eql('Employee updated!');
+                res.body.book.should.have.property('position').eql('Middle');
+              done();
+            });
+      });
+  });
+});
+
 });
