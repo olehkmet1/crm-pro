@@ -94,7 +94,7 @@ describe('/PUT/:id employee', () => {
   it('it should UPDATE an employee given the id', (done) => {
     let employee = new Employee({
           name: "The Lord of the Rings",
-          avatar: "https://1.fwcdn.pl/p/36/74/53674/374351.1.jpg",
+          avatar: "https://1.fwcdn.pl/p/36/74/53674/374351.12.jpg",
           active: true,
           department: 'Front-End',
           position: 'Junior',
@@ -104,17 +104,16 @@ describe('/PUT/:id employee', () => {
             chai.request(server)
             .put('/employees/' + employee.id)
             .send({
-              name: "The Lord of the Rings",
+              name: "The Lord 22of the Rings",
               avatar: "https://1.fwcdn.pl/p/36/74/53674/374351.1.jpg",
               active: true,
-              department: 'Front-End',
+              department: 'Front-En22',
               position: 'Middle',
-              skills: ["Angular", "React"]
+              skills: ["Angular2", "React"]
             })
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.should.be.a('object');
-                res.body.should.have.property('message').eql('Employee updated!');
                 res.body.book.should.have.property('position').eql('Middle');
               done();
             });
