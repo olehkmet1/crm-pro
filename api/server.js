@@ -4,6 +4,8 @@ const morgan = require('morgan');
 const jwt    = require('jsonwebtoken');
 const jwtConfig = require('./config/jwt.config');
 
+require('dotenv').load();
+
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -31,8 +33,9 @@ app.get('/', (req, res) => {
 
 require('./app/routes/employees.routes.js')(app);
 
+let port = process.env.port || 3000;
 
-app.listen(3000, () => {
+app.listen(port, () => {
     console.log("Server is listening on port 3000");
 });
 

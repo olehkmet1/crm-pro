@@ -31,29 +31,32 @@ describe('Employees', () => {
       });
   });
 
-//   describe('/POST employee', () => {
-//     it('it should not POST a employee without enough data', (done) => {
-//       let employee = {
-//           name: "The Lord of the Rings",
-//           avatar: "https://1.fwcdn.pl/p/36/74/53674/374351.1.jpg",
-//           active: true,
-//           department: 'Front-End',
-//           position: 'Junior',
-//           skills: ["Angular", "React"]
-//       }
-//       chai.request(server)
-//           .post('/employees')
-//           .send(employee)
-//           .end((err, res) => {
-//               res.should.have.status(200);
-//               res.body.should.be.a('object');
-//               res.body.should.have.property('errors');
-//               res.body.errors.should.have.property('name');
-//               res.body.errors.pages.should.have.property('kind').eql('required');
-//             done();
-//           });
-//     });
+  describe('/POST employee', () => {
+    it('it should not POST a employee without enough data', (done) => {
+      let employee = {
+          name: "The Lord of the Rings",
+          avatar: "https://1.fwcdn.pl/p/36/74/53674/374351.1.jpg",
+          active: true,
+          department: 'Front-End',
+          position: 'Junior',
+          skills: ["Angular", "React"]
+      }
+      chai.request(server)
+          .post('/employees')
+          .send(employee)
+          .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('skills');
+              res.body.should.have.property('name');
+              res.body.should.have.property('avatar');
+              res.body.should.have.property('active');
+              res.body.should.have.property('department');
+              res.body.should.have.property('position');
+            done();
+          });
+    });
 
-// });
+});
 
 });
