@@ -114,7 +114,32 @@ describe('/PUT/:id employee', () => {
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.should.be.a('object');
-                res.body.book.should.have.property('position').eql('Middle');
+                res.body.should.have.property('position').eql('Middle');
+              done();
+            });
+      });
+  });
+});
+
+describe('/DELETE/:id employee', () => {
+  it('it should DELETE an employee given the id', (done) => {
+    let employee = new Employee({
+          name: "The Lord of the Rings",
+          avatar: "https://1.fwcdn.pl/p/36/74/53674/374351.12.jpg",
+          active: true,
+          department: 'Front-End',
+          position: 'Junior',
+          skills: ["Angular", "React"]
+    })
+    employee.save((err, employee) => {
+            chai.request(server)
+            .delete('/employees/' + employee.id)
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('object');
+                res.body.should.have.property('message').eql('Employee successfully deleted!');
+                res.body.result.should.have.property('ok').eql(1);
+                res.body.result.should.have.property('n').eql(1);
               done();
             });
       });
