@@ -11,7 +11,6 @@ exports.create = (req, res) => {
         skills: req.body.skills
     });
 
-
     employee.save()
         .then(data => {
             res.send(data);
@@ -33,13 +32,18 @@ function isEmpty(obj) {
 exports.find = (req, res) => {
 
     let appliedFilters = [];
-
     let filter = {}
+    let skills;
 
     if (!isEmpty(req.query)) {
         for (let key in req.query) {
             if(req.query.hasOwnProperty('skills')) {
-                appliedFilters.push({ [key]: { $eq: ['Angular','React']}} )
+                skills = req.query[key].split(',');
+                skills = ['Angular', 'React'];
+                appliedFilters.push({ [key]: { $eq: skills.map(item => {
+                    console.log(item);
+                    return item
+                })}} )
             } else {
             appliedFilters.push({ [key]: { $regex: new RegExp("^" + req.query[key].toLowerCase(), "i") } })
             }
@@ -55,7 +59,7 @@ exports.find = (req, res) => {
             res.send(employees);
         }).catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while retrieving lessons."
+                message: err.message || "Some error occurred while retrieving employees."
             });
         });
 };
@@ -83,13 +87,6 @@ exports.findOne = (req, res) => {
 
 
 exports.update = (req, res) => {
-
-    if (!req.body.content) {
-        return res.status(400).send({
-            message: "Employee content can not be empty"
-        });
-    }
-
 
     Employee.findByIdAndUpdate(req.params.employeeId, {
         name: req.body.name,
@@ -121,8 +118,8 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
     Employee.findByIdAndRemove(req.params.employeeId)
-        .then(lesson => {
-            if (!lesson) {
+        .then(employee => {
+            if (!employee) {
                 return res.status(404).send({
                     message: "employee not found with id " + req.params.employeeId
                 });
