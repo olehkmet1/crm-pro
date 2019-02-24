@@ -36,13 +36,10 @@ exports.find = (req, res) => {
 
     let filter = {}
 
-    let skills = [];
-
     if (!isEmpty(req.query)) {
         for (let key in req.query) {
             if(req.query.hasOwnProperty('skills')) {
-                skills = req.query['skills'].split(',');
-                appliedFilters.push({ [key]: {$setIntersection: ["$skills", skills]}} )
+                appliedFilters.push({ [key]: { $eq: ['Angular','React']}} )
             } else {
             appliedFilters.push({ [key]: { $regex: new RegExp("^" + req.query[key].toLowerCase(), "i") } })
             }
